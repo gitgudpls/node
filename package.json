@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/gitgudpls/node/issues"
   },
-  "homepage": "https://github.com/gitgudpls/node#readme"
+  "homepage": "https://github.com/gitgudpls/node#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.7.4"
+  }
 }

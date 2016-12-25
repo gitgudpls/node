@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/gitgudpls/node#readme",
   "dependencies": {
+    "crypto": "0.0.3",
     "express": "^4.14.0",
     "mongoose": "^4.7.4",
     "token": "0.0.0"

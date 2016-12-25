@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var moment = require('moment');
 var hash = require('../utils/hash');
 
 var userSchema = mongoose.Schema({
@@ -12,13 +13,14 @@ var userSchema = mongoose.Schema({
 var User = mongoose.model('User', userSchema);
 
 var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-var phoneRegex = /^((([0-9]{3}))|([0-9]{3}))[-\s\.]?[0-9]{3}[-\s\.]?[0‌​-9]{4}$/;
+var phoneRegex = /^\(?[0-9]{3}\)?[ -]?\(?[0-9]{3}\)?[ -]?[0-9]{4}$/;
 
 var isUserValid = function(user) {
 	return phoneRegex.test(user.phone) && emailRegex.test(user.email);
 };
 
 var isUsernameFree = function(user) {
+	return true;
 	User.count({_id: user.username}, function(err, count) {
 		return count == 0;
 	});
@@ -33,7 +35,7 @@ module.exports = function(user) {
 							password: hashPassword,
 							email: user.email,
 							phone: user.phone,
-							createdAt: today;
+							createdAt: today
 						});
 	};
 	return false;

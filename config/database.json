@@ -1,0 +1,7 @@
+{
+	"host": "ds145178.mlab.com",
+	"port": "45178",
+	"dbName": "gitgudpls",
+	"dbUser": "admin",
+	"dbPassword": "root"
+}

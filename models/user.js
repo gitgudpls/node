@@ -19,24 +19,30 @@ var isUserValid = function(user) {
 	return phoneRegex.test(user.phone) && emailRegex.test(user.email);
 };
 
-var isUsernameFree = function(user) {
-	return true;
-	User.count({_id: user.username}, function(err, count) {
-		return count == 0;
+var checkIfUsernameValid = function(username, callback) {
+	User.count({ _id : username }, function(err, count) {
+		if(err || count != 0) {
+			callback(false);
+		};
+		callback(true);
 	});
 };
 
-module.exports = function(user) {
-	if(isUserValid(user) && isUsernameFree(user)) {
-		var today =  moment().startOf('day').toDate();
-		var hashPassword = hash.hashString(user.password);
-		return new User({
-							_id: user.username,
-							password: hashPassword,
-							email: user.email,
-							phone: user.phone,
-							createdAt: today
-						});
-	};
-	return false;
+module.exports = function(userValues) {
+	if(isUserValid(userValues)) {
+		checkIfUsernameValid(userValues.username, function(valid) {
+			if(valid) {
+				var today =  moment().startOf('day').toDate();
+				var hashPassword = hash.hashString(userValues.password);
+				var user = new User({
+					_id: userValues.username,
+					password: hashPassword,
+					email: userValues.email,
+					phone: userValues.phone,
+					createdAt: today
+				});
+				user.save(function(err) {});	
+			}
+		});
+	}
 };
